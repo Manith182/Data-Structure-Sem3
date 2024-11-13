@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+// Queue Operations
+struct Node *front = NULL, *rear = NULL;
+
+void enqueue(int val) {
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->next = NULL;
+    if (front == NULL && rear == NULL)
+        front = rear = newNode;
+    else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+}
+
+void dequeue() {
+    if (front == NULL) {
+        printf("Queue is Empty. Unable to perform dequeue\n");
+        return;
+    }
+    struct Node *temp = front;
+    front = front->next;
+    if (front == NULL)
+        rear = NULL;
+    free(temp);
+}
+
+void printQueue() {
+    struct Node *temp = front;
+    while (temp) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+// Stack Operations
+struct Node *stackHead = NULL;
+
+void push(int val) {
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->next = stackHead;
+    stackHead = newNode;
+}
+
+void pop() {
+    if (stackHead == NULL) {
+        printf("Stack is Empty\n");
+        return;
+    }
+    struct Node *temp = stackHead;
+    printf("Popped element = %d\n", stackHead->data);
+    stackHead = stackHead->next;
+    free(temp);
+}
+
+void printStack() {
+    struct Node *temp = stackHead;
+    while (temp) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    // Queue Operations
+    printf("Queue Operations:\n");
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    printf("Queue: ");
+    printQueue();
+    dequeue();
+    printf("After dequeue: ");
+    printQueue();
+    dequeue();
+    printf("After dequeue: ");
+    printQueue();
+
+    // Stack Operations
+    printf("\nStack Operations:\n");
+    push(10);
+    push(20);
+    push(30);
+    printf("Stack: ");
+    printStack();
+    pop();
+    printf("After pop: ");
+    printStack();
+    pop();
+    printf("After pop: ");
+    printStack();
+
+    return 0;
+}
