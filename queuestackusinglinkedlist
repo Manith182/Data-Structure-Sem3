@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,7 +7,35 @@ struct Node {
     struct Node *next;
 };
 
-// Queue Operations
+struct Node *stackHead = NULL;
+
+void push(int val) {
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->next = stackHead;
+    stackHead = newNode;
+}
+
+void pop() {
+    if (stackHead == NULL) {
+        printf("Stack is Empty\n");
+        return;
+    }
+    struct Node *temp = stackHead;
+    printf("Popped element = %d\n", stackHead->data);
+    stackHead = stackHead->next;
+    free(temp);
+}
+
+void printStack() {
+    struct Node *temp = stackHead;
+    while (temp) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
 struct Node *front = NULL, *rear = NULL;
 
 void enqueue(int val) {
@@ -42,38 +71,11 @@ void printQueue() {
     printf("NULL\n");
 }
 
-// Stack Operations
-struct Node *stackHead = NULL;
 
-void push(int val) {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    newNode->data = val;
-    newNode->next = stackHead;
-    stackHead = newNode;
-}
 
-void pop() {
-    if (stackHead == NULL) {
-        printf("Stack is Empty\n");
-        return;
-    }
-    struct Node *temp = stackHead;
-    printf("Popped element = %d\n", stackHead->data);
-    stackHead = stackHead->next;
-    free(temp);
-}
-
-void printStack() {
-    struct Node *temp = stackHead;
-    while (temp) {
-        printf("%d -> ", temp->data);
-        temp = temp->next;
-    }
-    printf("NULL\n");
-}
 
 int main() {
-    // Queue Operations
+
     printf("Queue Operations:\n");
     enqueue(10);
     enqueue(20);
@@ -87,7 +89,6 @@ int main() {
     printf("After dequeue: ");
     printQueue();
 
-    // Stack Operations
     printf("\nStack Operations:\n");
     push(10);
     push(20);
@@ -99,7 +100,6 @@ int main() {
     printStack();
     pop();
     printf("After pop: ");
-    printStack();
-
-    return 0;
+   printStack();
 }
+
